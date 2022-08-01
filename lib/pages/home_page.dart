@@ -3,6 +3,7 @@ import 'package:movieapp/resources/colors.dart';
 import 'package:movieapp/resources/dimens.dart';
 import 'package:movieapp/resources/strings.dart';
 import 'package:movieapp/viewitems/banner_view.dart';
+import 'package:movieapp/viewitems/movie_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -28,18 +29,42 @@ class HomePage extends StatelessWidget {
       body: Container(
         color: PRIMARY_COLOR,
         child: Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height / 3,
-              child: PageView(
-                children: const [
-                  BannerView(),
-                  BannerView(),
-                ],
-              ),
-            ),
-          ],
+            children: [
+            const BannerSectionView(),
+        Container(
+          height: MOVIE_LIST_HEIGHT,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.only(left: MARGIN_MEDIUM_2),
+            itemCount: 10,
+            itemBuilder: (BuildContext context, int index) {
+              return const MovieView();
+            },
+          ),
+        )],
         ),
+      ),
+    );
+  }
+}
+
+class BannerSectionView extends StatelessWidget {
+  const BannerSectionView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery
+          .of(context)
+          .size
+          .height / 3,
+      child: PageView(
+        children: const [
+          BannerView(),
+          BannerView(),
+        ],
       ),
     );
   }
