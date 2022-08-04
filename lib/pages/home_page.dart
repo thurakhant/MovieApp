@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/resources/colors.dart';
 import 'package:movieapp/resources/dimens.dart';
 import 'package:movieapp/resources/strings.dart';
+import 'package:movieapp/viewitems/actor_view.dart';
+import 'package:movieapp/viewitems/showcase_view.dart';
+import 'package:movieapp/widgets/see_more_text.dart';
+import 'package:movieapp/widgets/title_text.dart';
 import 'package:movieapp/viewitems/banner_view.dart';
 import 'package:movieapp/viewitems/movie_view.dart';
+
+import '../widgets/title_text_with_see_more_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -28,21 +34,129 @@ class HomePage extends StatelessWidget {
       ),
       body: Container(
         color: PRIMARY_COLOR,
-        child: Column(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            const BannerSectionView(),
-        Container(
-          height: MOVIE_LIST_HEIGHT,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.only(left: MARGIN_MEDIUM_2),
-            itemCount: 10,
-            itemBuilder: (BuildContext context, int index) {
-              return const MovieView();
-            },
+              BannerSectionView(),
+              SizedBox(height: MARGIN_LARGE),
+              BestPopularSectionMoviesAndSerialsSectionView(),
+              SizedBox(height: MARGIN_LARGE),
+              HorizintalMovieListView(),
+              SizedBox(height: MARGIN_LARGE),
+              ShowcasesSection(),
+              SizedBox(height: MARGIN_LARGE),
+              BestActorSectionView(),
+              SizedBox(height: MARGIN_LARGE),
+            ],
           ),
-        )],
         ),
+      ),
+    );
+  }
+}
+
+class BestActorSectionView extends StatelessWidget {
+  const BestActorSectionView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: MARGIN_MEDIUM_2),
+          child: TitleTextWithSeeMoreView(
+              BEST_ACTORS_TITLE, BEST_ACTORS_SEE_MORE),
+        ),
+        SizedBox(height: MARGIN_MEDIUM_2),
+        Container(
+          height: BEST_ACTOR_HEIGHT,
+          child: ListView(
+            padding: EdgeInsets.only(left: MARGIN_MEDIUM_2),
+            scrollDirection: Axis.horizontal,
+            children: [
+              ActorView(),
+              ActorView(),
+              ActorView(),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class ShowcasesSection extends StatelessWidget {
+  const ShowcasesSection({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: MARGIN_MEDIUM_2),
+          child:
+              TitleTextWithSeeMoreView(SHOW_CASES_TITLE, SHOW_CASES_SEE_MORE),
+        ),
+        const SizedBox(height: MARGIN_MEDIUM_2),
+        Container(
+          height: SHOW_CASES_HEIGHT,
+          child: ListView(
+            padding: EdgeInsets.only(left: MARGIN_MEDIUM_2),
+            scrollDirection: Axis.horizontal,
+            children: const [
+              ShowCaseView(),
+              ShowCaseView(),
+              ShowCaseView(),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class BestPopularSectionMoviesAndSerialsSectionView extends StatelessWidget {
+  const BestPopularSectionMoviesAndSerialsSectionView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(left: MARGIN_MEDIUM_2),
+          child: const TitleText(BEST_SCREEN_BEST_POPULAR_MOVIES_AND_SERIALS),
+        ),
+        const SizedBox(height: MARGIN_MEDIUM_2),
+        const HorizintalMovieListView(),
+      ],
+    );
+  }
+}
+
+class HorizintalMovieListView extends StatelessWidget {
+  const HorizintalMovieListView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MOVIE_LIST_HEIGHT,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.only(left: MARGIN_MEDIUM_2),
+        itemCount: 10,
+        itemBuilder: (BuildContext context, int index) {
+          return const MovieView();
+        },
       ),
     );
   }
@@ -55,11 +169,8 @@ class BannerSectionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery
-          .of(context)
-          .size
-          .height / 3,
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 3,
       child: PageView(
         children: const [
           BannerView(),

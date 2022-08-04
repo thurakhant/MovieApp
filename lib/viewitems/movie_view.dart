@@ -24,7 +24,7 @@ class MovieView extends StatelessWidget {
             'West World',
             style: TextStyle(
               color: Colors.white,
-              fontSize: TEXt_REGULAR_2X,
+              fontSize: TEXT_REGULAR_2X,
               fontWeight: FontWeight.w600,
             ),
           ),
