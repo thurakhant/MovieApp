@@ -1,3 +1,4 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:movieapp/resources/colors.dart';
 import 'package:movieapp/resources/dimens.dart';
@@ -33,7 +34,7 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: Container(
-        color: PRIMARY_COLOR,
+        color: HOME_SCREEN_BACKGROUND_COLOR,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,6 +42,8 @@ class HomePage extends StatelessWidget {
               BannerSectionView(),
               SizedBox(height: MARGIN_LARGE),
               BestPopularSectionMoviesAndSerialsSectionView(),
+              SizedBox(height: MARGIN_LARGE),
+              CheckMovieShowTimeSectionView(),
               SizedBox(height: MARGIN_LARGE),
               HorizintalMovieListView(),
               SizedBox(height: MARGIN_LARGE),
@@ -51,6 +54,49 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class CheckMovieShowTimeSectionView extends StatelessWidget {
+  const CheckMovieShowTimeSectionView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: SHOWTIME_SECTION_HEIGHT,
+      color: PRIMARY_COLOR,
+      margin: EdgeInsets.symmetric(horizontal: MARGIN_MEDIUM_2),
+      padding: EdgeInsets.all(MARGIN_LARGE),
+      child: Row(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                MAIN_SCREEN_CHECK_MOVIE_SHOW_TIME,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: TEXT_HEADING_1X,
+                    fontWeight: FontWeight.w600),
+              ),
+              Spacer(),
+              SeeMoreText(
+                MAIN_SCREEN_SEE_MORE,
+                textColor: PLAY_BUTTON_COLOR,
+              ),
+            ],
+          ),
+          Spacer(),
+          Icon(
+            Icons.location_on_rounded,
+            color: Colors.white,
+            size: BANNER_PLAY_BUTTON_SIZE,
+          ),
+        ],
       ),
     );
   }
@@ -67,8 +113,8 @@ class BestActorSectionView extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: MARGIN_MEDIUM_2),
-          child: TitleTextWithSeeMoreView(
-              BEST_ACTORS_TITLE, BEST_ACTORS_SEE_MORE),
+          child:
+              TitleTextWithSeeMoreView(BEST_ACTORS_TITLE, BEST_ACTORS_SEE_MORE),
         ),
         SizedBox(height: MARGIN_MEDIUM_2),
         Container(
@@ -169,14 +215,23 @@ class BannerSectionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height / 3,
-      child: PageView(
-        children: const [
-          BannerView(),
-          BannerView(),
-        ],
-      ),
+    return Column(
+      children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 3,
+          child: PageView(
+            children: const [
+              BannerView(),
+              BannerView(),
+            ],
+          ),
+        ),
+        SizedBox(height: MARGIN_MEDIUM_2),
+        DotsIndicator(dotsCount: 2,position: 0,decorator: DotsDecorator(
+          color: HOME_SCREEN_BANNER_DOTS_INACTIVE_COLOR,
+          activeColor: PLAY_BUTTON_COLOR,
+        ),),
+      ],
     );
   }
 }

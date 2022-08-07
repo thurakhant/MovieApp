@@ -43,7 +43,7 @@ class GradientView extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [
             Colors.transparent,
-            PRIMARY_COLOR,
+            HOME_SCREEN_BACKGROUND_COLOR,
           ])),
         );
   }
