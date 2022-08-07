@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:movieapp/resources/colors.dart';
 import 'package:movieapp/resources/dimens.dart';
 import 'package:movieapp/widgets/play_button_view.dart';
+
+import '../widgets/gradient_view.dart';
 
 class BannerView extends StatelessWidget {
   const BannerView({Key? key}) : super(key: key);
@@ -29,25 +30,7 @@ class BannerView extends StatelessWidget {
 }
 
 
-class GradientView extends StatelessWidget {
-  const GradientView({
-    Key? key,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-          decoration: const BoxDecoration(
-      gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.transparent,
-            HOME_SCREEN_BACKGROUND_COLOR,
-          ])),
-        );
-  }
-}
 
 class BannerTitleView extends StatelessWidget {
   const BannerTitleView({

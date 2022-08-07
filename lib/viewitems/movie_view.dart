@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:movieapp/widgets/rating_view.dart';
 
 import '../resources/dimens.dart';
 
 class MovieView extends StatelessWidget {
-  const MovieView({Key? key}) : super(key: key);
+  final Function onTapMovie;
+  const MovieView(
+      this.onTapMovie,
+      {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +18,15 @@ class MovieView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            'https://www.arthipo.com/image/cache/catalog/poster/movie/759-1554/pfilm1389-the-wolverine_bec3e98a-film-movie-posters-cinema-kanvas-tablo-canvas-1000x1000.jpg',
-            fit: BoxFit.cover,
-            height: 200,
+          GestureDetector(
+            onTap: (){
+              onTapMovie();
+            },
+            child: Image.network(
+              'https://www.arthipo.com/image/cache/catalog/poster/movie/759-1554/pfilm1389-the-wolverine_bec3e98a-film-movie-posters-cinema-kanvas-tablo-canvas-1000x1000.jpg',
+              fit: BoxFit.cover,
+              height: 200,
+            ),
           ),
           const SizedBox(height: MARGIN_MEDIUM),
           const Text(
@@ -30,8 +39,8 @@ class MovieView extends StatelessWidget {
           ),
           const SizedBox(height: MARGIN_MEDIUM),
           Row(
-            children: [
-              const Text(
+            children: const [
+               Text(
                 '8.9',
                 style: TextStyle(
                   color: Colors.white,
@@ -39,15 +48,8 @@ class MovieView extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(width: MARGIN_MEDIUM),
-              RatingBar.builder(
-                initialRating: 5.0,
-                itemSize: MARGIN_MEDIUM_2,
-                  itemBuilder: (BuildContext context, int index) =>
-                      const Icon(Icons.star, color: Colors.amber),
-                  onRatingUpdate: (rating) {
-
-                  })
+              SizedBox(width: MARGIN_MEDIUM),
+              RatingView(),
             ],
           )
         ],
