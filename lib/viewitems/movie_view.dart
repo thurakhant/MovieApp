@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:movieapp/network/api_constants.dart';
 import 'package:movieapp/widgets/rating_view.dart';
 
+import '../data/vos/movie_vo.dart';
 import '../resources/dimens.dart';
 
 class MovieView extends StatelessWidget {
-  final Function onTapMovie;
+  final Function(int) onTapMovie;
+  final MovieVO mMovie;
   const MovieView(
-      this.onTapMovie,
+      this.onTapMovie,this.mMovie,
       {Key? key}) : super(key: key);
 
   @override
@@ -20,18 +23,18 @@ class MovieView extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: (){
-              onTapMovie();
+              onTapMovie(mMovie.id);
             },
             child: Image.network(
-              'https://www.arthipo.com/image/cache/catalog/poster/movie/759-1554/pfilm1389-the-wolverine_bec3e98a-film-movie-posters-cinema-kanvas-tablo-canvas-1000x1000.jpg',
+              '$IMAGE_BASE_URL${mMovie.posterPath}',
               fit: BoxFit.cover,
               height: 200,
             ),
           ),
           const SizedBox(height: MARGIN_MEDIUM),
-          const Text(
-            'West World',
-            style: TextStyle(
+          Text(
+            mMovie.title.toString(),
+            style: const TextStyle(
               color: Colors.white,
               fontSize: TEXT_REGULAR_2X,
               fontWeight: FontWeight.w600,

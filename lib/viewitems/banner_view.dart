@@ -1,26 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/data/vos/movie_vo.dart';
+import 'package:movieapp/network/api_constants.dart';
 import 'package:movieapp/resources/dimens.dart';
 import 'package:movieapp/widgets/play_button_view.dart';
 
 import '../widgets/gradient_view.dart';
 
 class BannerView extends StatelessWidget {
-  const BannerView({Key? key}) : super(key: key);
+  final MovieVO mMovie;
+  const BannerView({
+    required this.mMovie,
+    Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: const [
+      children: [
          Positioned.fill(
-          child: BannerImageView(),
+          child: BannerImageView(
+            mImageUrl: mMovie.posterPath ?? '',
+          ),
         ),
-         Positioned.fill(
+         const Positioned.fill(
             child: GradientView()),
         Align(
           alignment: Alignment.bottomLeft,
-          child: BannerTitleView(),
+          child: BannerTitleView(
+            mMovieName: mMovie.title ?? '',
+          ),
         ),
-        Align(
+        const Align(
           alignment: Alignment.center,
           child: PlayButtonView(),
         )
@@ -33,7 +42,9 @@ class BannerView extends StatelessWidget {
 
 
 class BannerTitleView extends StatelessWidget {
+  final String mMovieName;
   const BannerTitleView({
+    required this.mMovieName,
     Key? key,
   }) : super(key: key);
 
@@ -44,16 +55,16 @@ class BannerTitleView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
-        children: const [
+        children:  [
           Text(
-            'The Wolverine 2013.',
-            style: TextStyle(
+            mMovieName,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: TEXT_HEADING_1X,
               fontWeight: FontWeight.w500,
             ),
           ),
-          Text(
+          const Text(
             'Official Review',
             style: TextStyle(
               color: Colors.white,
@@ -68,14 +79,16 @@ class BannerTitleView extends StatelessWidget {
 }
 
 class BannerImageView extends StatelessWidget {
+  final String mImageUrl;
   const BannerImageView({
+    required this.mImageUrl,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Image.network(
-      'https://www.arthipo.com/image/cache/catalog/poster/movie/759-1554/pfilm1389-the-wolverine_bec3e98a-film-movie-posters-cinema-kanvas-tablo-canvas-1000x1000.jpg',
+      '$IMAGE_BASE_URL$mImageUrl',
       fit: BoxFit.cover,
     );
   }

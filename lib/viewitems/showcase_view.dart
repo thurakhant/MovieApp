@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/network/api_constants.dart';
 import 'package:movieapp/resources/dimens.dart';
 import 'package:movieapp/widgets/play_button_view.dart';
 import 'package:movieapp/widgets/title_text.dart';
 
+import '../data/vos/movie_vo.dart';
+
 class ShowCaseView extends StatelessWidget {
-  const ShowCaseView({Key? key}) : super(key: key);
+  final MovieVO mMovie;
+  const ShowCaseView({
+    required this.mMovie,
+    Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(right: MARGIN_MEDIUM_2),
       width: 300,
-      decoration: BoxDecoration(),
+      decoration: const BoxDecoration(),
       child: Stack(
         children: [
           Positioned.fill(
             child: Image.network(
-              'https://www.arthipo.com/image/cache/catalog/poster/movie/759-1554/pfilm1389-the-wolverine_bec3e98a-film-movie-posters-cinema-kanvas-tablo-canvas-1000x1000.jpg',
+              '$IMAGE_BASE_URL${mMovie.posterPath}',
               fit: BoxFit.cover,
             ),
           ),
@@ -31,17 +37,17 @@ class ShowCaseView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                children: const [
+                children:  [
                   Text(
-                    'Passengers',
-                    style: TextStyle(
+                    mMovie.title ?? '',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: TEXT_REGULAR_3X,
                       fontWeight: FontWeight.w600,
                       ),
                   ),
-                  SizedBox(height: MARGIN_SMALL),
-                  TitleText("15 DECEMBER 2016"),
+                  const SizedBox(height: MARGIN_SMALL),
+                  const TitleText("15 DECEMBER 2016"),
                 ],
               ),
             ),

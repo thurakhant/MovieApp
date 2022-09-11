@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/data/vos/base_actor_vo.dart';
+import 'package:movieapp/network/api_constants.dart';
 import 'package:movieapp/resources/colors.dart';
-
 import '../resources/dimens.dart';
 
 class ActorView extends StatelessWidget {
-  const ActorView({Key? key}) : super(key: key);
+  final BaseActorVO mActor;
+  const ActorView({
+    required this.mActor,
+    Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +18,7 @@ class ActorView extends StatelessWidget {
       child: Stack(
         children: [
           Positioned.fill(
-            child: ActorImageView(),
+            child: ActorImageView(mActorImageUrl: mActor.profilePath ?? '',),
           ),
           const Padding(
             padding: EdgeInsets.all(MARGIN_MEDIUM),
@@ -25,7 +29,7 @@ class ActorView extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: ActorNameLikeView(),
+            child: ActorNameLikeView(mActorName: mActor.name ?? '',),
           )
         ],
       ),
@@ -34,14 +38,16 @@ class ActorView extends StatelessWidget {
 }
 
 class ActorImageView extends StatelessWidget {
+  final String mActorImageUrl;
   const ActorImageView({
+    required this.mActorImageUrl,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Image.network(
-      "https://upload.wikimedia.org/wikipedia/commons/2/25/Leonardo_DiCaprio_2014.jpg",
+      '$IMAGE_BASE_URL$mActorImageUrl',
       fit: BoxFit.cover,
     );
   }
@@ -54,7 +60,7 @@ class FavouriteButtonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
+    return const Icon(
       Icons.favorite_outline,
       color: Colors.white,
     );
@@ -62,7 +68,9 @@ class FavouriteButtonView extends StatelessWidget {
 }
 
 class ActorNameLikeView extends StatelessWidget {
+  final String mActorName;
   const ActorNameLikeView({
+    required this.mActorName,
     Key? key,
   }) : super(key: key);
 
@@ -78,16 +86,16 @@ class ActorNameLikeView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Leonardo Dicaprio',
-            style: TextStyle(
+            mActorName,
+            style: const TextStyle(
               fontSize: TEXT_REGULAR_2X,
               color: Colors.white,
               fontWeight: FontWeight.w700,
             ),
           ),
-          SizedBox(height: MARGIN_MEDIUM),
+          const SizedBox(height: MARGIN_MEDIUM),
           Row(
-            children: [
+            children: const [
               Icon(
                 Icons.thumb_up,
                 color: Colors.amber,
